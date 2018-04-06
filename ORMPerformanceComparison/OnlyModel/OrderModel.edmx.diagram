@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c2baa7567ff746cd95c0fbd18bcb489b" Name="Diagram1">
+        <EntityTypeShape EntityType="OrderTestModel.Customer" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrderTestModel.OrderDetail" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrderTestModel.Order" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrderTestModel.Product" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrderTestModel.Warehouse" Width="1.5" PointX="0.875" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="OrderTestModel.FK_Orders_Customers_CustomerId_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="OrderTestModel.FK_OrderDetails_Orders_OrderId_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="OrderTestModel.FK_OrderDetails_Products_ProductId_Id" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
