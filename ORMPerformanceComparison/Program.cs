@@ -58,20 +58,20 @@
                 .ToArray();
 
             List<TestResultItem> results = new List<TestResultItem>();
-            for (int i = 0; i < TestSumCount; i++)
+            for (int i = 0; i < TestSumCount + 1; i++)
             {
                 foreach (var framework in frameworks)
                 {
                     foreach (var p in insertProducts) p.Id = 0;
                     var item = new TestResultItem(framework)
                     {
-                        Convert.ToInt64(Enumerable.Range(0,TestSelectCount1).Average(a=>
+                        Convert.ToInt64(Enumerable.Range(0,TestSelectCount1).Sum(a=>
                             framework.GetCustomerById(r.Next(customeIds.Item1, customeIds.Item2))
                             )),
-                        Convert.ToInt64(Enumerable.Range(0,TestSelectCount2).Average(a=>
+                        Convert.ToInt64(Enumerable.Range(0,TestSelectCount2).Sum(a=>
                             framework.GetDetailsByOrder(r.Next(orderIds.Item1, orderIds.Item2))
                             )),
-                        Convert.ToInt64(Enumerable.Range(0,TestSelectCount3).Average(a=>
+                        Convert.ToInt64(Enumerable.Range(0,TestSelectCount3).Sum(a=>
                             framework.GetOrderAndDetails(r.Next(orderIds.Item1, orderIds.Item2))
                             )),
                         framework.InsertDiscreteCustomers(insertCustomes),
@@ -80,7 +80,10 @@
                         framework.DeleteDiscreteDetails(deleteDetails),
                         framework.DeleteDiscreteWarehouses(deleteWarehouse),
                     };
-                    results.Add(item);
+                    if (i > 0)
+                    {
+                        results.Add(item);
+                    }
                 }
             }
             Output(results);

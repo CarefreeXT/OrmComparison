@@ -156,14 +156,31 @@ WHERE   o.Id = @OrderId;", conn))
                     using (var adapter = Utility.CreateAdapter("SELECT Id, Name, Code, Address1, Address2, Zip FROM dbo.Customers", conn))
                     {
                         DataTable table = new DataTable();
-                        SqlCommandBuilder bulder = new SqlCommandBuilder(adapter);
                         adapter.FillSchema(table, SchemaType.Source);
-                        adapter.UpdateCommand = bulder.GetUpdateCommand();
-
+                        SqlCommandBuilder bulder = new SqlCommandBuilder(adapter);
+                        var update = new SqlCommand(
+@"UPDATE [dbo].[Customers]
+   SET [Address1] = @Address1
+      ,[Address2] = @Address2
+      ,[Code] = @Code
+      ,[Name] = @Name
+      ,[Zip] = @Zip
+ WHERE [Id] =@Id;"
+, conn);
+                        update.Parameters.Add(new SqlParameter() { ParameterName = "@Id", SourceColumn = "Id" });
+                        update.Parameters.Add(new SqlParameter() { ParameterName = "@Address1", SourceColumn = "Address1" });
+                        update.Parameters.Add(new SqlParameter() { ParameterName = "@Address2", SourceColumn = "Address2" });
+                        update.Parameters.Add(new SqlParameter() { ParameterName = "@Code", SourceColumn = "Code" });
+                        update.Parameters.Add(new SqlParameter() { ParameterName = "@Name", SourceColumn = "Name" });
+                        update.Parameters.Add(new SqlParameter() { ParameterName = "@Zip", SourceColumn = "Zip" });
+                        adapter.UpdateCommand = update;
                         foreach (var c in customers)
                         {
-                            var row = table.Rows.Add(c.Id, c.Name, c.Code, c.Address1, c.Address2, c.Zip);
-                            row.AcceptChanges();
+                            table.Rows.Add(c.Id, c.Name, c.Code, c.Address1, c.Address2, c.Zip);
+                        }
+                        table.AcceptChanges();
+                        foreach (DataRow row in table.Rows)
+                        {
                             row.SetModified();
                         }
                         int val = adapter.Update(table);
