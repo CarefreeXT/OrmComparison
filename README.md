@@ -1,7 +1,7 @@
 # OrmComparison
 Popular O/RM frameworks performance comparison.
 
-## Framework List:
+## Comparison Framework List:
 
 * ADO.NET
 * [EntityFramework](https://github.com/aspnet/EntityFramework6)
